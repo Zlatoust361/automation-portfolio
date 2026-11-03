@@ -1,0 +1,27 @@
+# Манифест синхронизации с источником — см. .portfolio/sync.py и UPDATING.md.
+# Источник: закрытая монорепа industrial-automation-course (24 недели + треки).
+source: ../industrial-automation-course
+
+# Здесь зеркалятся ОТДЕЛЬНЫЕ МОДУЛИ, и путь в портфолио НЕ совпадает с путём
+# в источнике — поэтому у этого репо маппинг пофайловый: "портфолио: источник".
+# sync.py понимает обе формы (строка = одинаковый путь; словарь = разные пути).
+mirror:
+  - case-1-jetson-plc-watchdog/safety_watchdog.py: weeks/week07-jetson-plc-bringup/src/core/safety_watchdog.py
+  - case-3-pid-antiwindup/pid_controller.py: weeks/week05-welding-automation-sim/src/control/pid_controller.py
+
+patched: []
+
+# Принадлежит только портфолио: все README.md, test_*.py (написаны для
+# портфолио, в источнике их нет), LICENSE, .github/, .portfolio/, UPDATING.md.
+
+forbidden:
+  - "\\bруб\\.?\\b|₽"
+  - "прайс|стоимость курса|цена курса"
+  - "\\+7[ (]?\\d{3}"
+  - "@gmail\\.com|@yandex\\.ru|@mail\\.ru"
+  # Имена реальных заказчиков/площадок в код витрины не попадают:
+  - "icecream|морожен"
+
+verify:
+  - "python -m pytest -q case-1-jetson-plc-watchdog"
+  - "python -m pytest -q case-3-pid-antiwindup"
