@@ -1,0 +1,24 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # 3.10 — версия Python в JetPack 6 на Jetson Orin Nano; 3.12 — текущая desktop.
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install pytest
+      - name: Кейс 1 — watchdog (возврат управления через timeout_s, защёлка, abandoned)
+        run: python -m pytest -q case-1-jetson-plc-watchdog
+      - name: Кейс 3 — PID (антивиндап, производная по измерению, факт про D)
+        run: python -m pytest -q case-3-pid-antiwindup
